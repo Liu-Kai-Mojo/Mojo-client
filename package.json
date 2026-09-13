@@ -1,9 +1,9 @@
 {
-  "name": "boxoffice-client-frontend",
+  "name": "boxoffice-admin-frontend",
   "private": true,
   "version": "1.7.0",
   "scripts": {
-    "build": "node scripts/build-pages.mjs client"
+    "build": "node scripts/build-pages.mjs admin"
   },
   "engines": {
     "node": ">=22"
