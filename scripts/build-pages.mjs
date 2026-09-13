@@ -1,13 +1,27 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const root = process.cwd();
-const apiBase = String(process.env.BO_API_BASE || '').trim().replace(/\/$/, '');
+const app = process.argv[2] || 'client';
+const allowed = new Set(['client', 'admin', 'owner']);
+if (!allowed.has(app)) throw new Error(`Unknown app: ${app}`);
 
-if (apiBase && !/^https:\/\//i.test(apiBase) && apiBase !== '/api') {
-  throw new Error('BO_API_BASE must be an HTTPS URL or /api');
+const root = process.cwd();
+const source = path.join(root, 'shared');
+const target = path.join(root, 'apps', app, 'shared');
+
+if (!fs.existsSync(source)) throw new Error('Missing shared/ directory');
+if (!fs.existsSync(path.join(root, 'apps', app, 'index.html'))) {
+  throw new Error(`Missing apps/${app}/index.html`);
 }
 
-const config = `// Generated at build time. Do not store secrets here.\nwindow.__BO_API_BASE__ = ${JSON.stringify(apiBase || '/api')};\n`;
-fs.writeFileSync(path.join(root, 'config.js'), config, 'utf8');
-console.log(`BoxOffice build prepared. API base: ${apiBase || '/api'}`);
+fs.rmSync(target, { recursive: true, force: true });
+fs.cpSync(source, target, { recursive: true });
+
+for (const file of ['_headers', 'index.html']) {
+  if (!fs.existsSync(path.join(root, 'apps', app, file))) {
+    throw new Error(`Missing apps/${app}/${file}`);
+  }
+}
+
+console.log(`Pages build ready: apps/${app}`);
+console.log(`Shared assets staged: apps/${app}/shared`);
