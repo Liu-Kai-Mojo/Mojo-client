@@ -2,7 +2,7 @@
    Single viewport, fluid scaling, safe-area aware, no horizontal overflow. */
 :root{--mojo-gold:#d8b45a;--mojo-max:560px;--mojo-pad:clamp(12px,4vw,28px);}
 *,*::before,*::after{box-sizing:border-box;}
-html{width:100%;min-height:100%;overflow-x:visible;background:#050505;}
+html{width:100%;min-height:100%;overflow-x:hidden;background:#050505;}
 body.auth-page{width:100%;min-width:0;min-height:100svh;height:100dvh;margin:0;overflow:hidden;overscroll-behavior:none;-webkit-text-size-adjust:100%;}
 .auth-page [data-auth-slideshow]{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:-10!important;overflow:hidden!important;}
 .auth-page [data-auth-slideshow]::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.58));pointer-events:none;}

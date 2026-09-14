@@ -18,10 +18,10 @@ if (root) {
   style.textContent = `
     .auth-slide{transition:opacity 1.35s cubic-bezier(.22,.61,.36,1),transform 6.8s cubic-bezier(.16,1,.3,1)!important;transform:scale(1.08) translate3d(0,0,0)!important;will-change:opacity,transform;backface-visibility:hidden}
     .auth-slide.is-active{opacity:1!important;transform:scale(1.015) translate3d(0,0,0)!important}
-    .auth-page .auth-topbar .auth-logo{width:clamp(112px,30vw,190px)!important;height:auto!important;max-width:100%!important;max-height:120px!important;margin-top:0!important;object-fit:contain!important;filter:drop-shadow(0 12px 30px rgba(255,198,70,.28))!important}
+    .auth-page .auth-topbar .auth-logo{width:min(654px,82vw)!important;height:auto!important;aspect-ratio:13/8;max-width:82vw!important;max-height:210px!important;margin-top:24px!important;object-fit:contain!important;filter:drop-shadow(0 16px 42px rgba(255,198,70,.38))!important}
     .auth-page .auth-topbar .auth-brand-subtitle{margin-top:16px!important}
-    @media(max-width:560px){.auth-page .auth-topbar .auth-logo{width:clamp(100px,30vw,170px)!important;max-width:100%!important;max-height:92px!important;margin-top:0!important}.auth-page .auth-topbar .auth-brand-subtitle{margin-top:6px!important}}
-    @media(max-height:720px) and (max-width:560px){.auth-page .auth-topbar .auth-logo{width:140px!important;max-height:70px!important}.auth-page .auth-topbar .auth-brand-subtitle{margin-top:4px!important}}
+    @media(max-width:560px){.auth-page .auth-topbar .auth-logo{width:min(654px,82vw)!important;max-width:82vw!important;max-height:190px!important;margin-top:18px!important}.auth-page .auth-topbar .auth-brand-subtitle{margin-top:13px!important}}
+    @media(max-height:720px) and (max-width:560px){.auth-page .auth-topbar .auth-logo{width:min(654px,78vw)!important;max-height:150px!important;margin-top:10px!important}.auth-page .auth-topbar .auth-brand-subtitle{margin-top:8px!important}}
     @media(prefers-reduced-motion:reduce){.auth-slide{transition:none!important;transform:none!important}.auth-slide:not(.is-active){display:none!important}}
   `;
   document.head.appendChild(style);
