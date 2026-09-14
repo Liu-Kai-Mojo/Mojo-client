@@ -1,0 +1,11 @@
+﻿{
+  "name": "boxoffice-client-frontend",
+  "private": true,
+  "version": "1.7.1",
+  "scripts": {
+    "build": "node scripts/build-pages.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
