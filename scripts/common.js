@@ -1,0 +1,12 @@
+export const API=(window.BO_CONFIG?.API_BASE||localStorage.getItem('bo_api')||'/api').replace(/\/$/,'');
+export function token(){return localStorage.getItem('bo_token')||sessionStorage.getItem('bo_token')}
+export function currentUser(){try{return JSON.parse(localStorage.getItem('bo_user')||sessionStorage.getItem('bo_user')||'null')}catch{return null}}
+export async function api(path,options={}){const auth=token();const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),15000);try{const res=await fetch(API+path,{...options,signal:options.signal||controller.signal,headers:{'Content-Type':'application/json',...(options.headers||{}),...(auth?{Authorization:`Bearer ${auth}`}:{})}});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error||`Request failed (${res.status})`);return data}catch(e){if(e?.name==='AbortError')throw new Error('Request timed out. Please try again.');throw e}finally{clearTimeout(timer)}}
+export async function apiForm(path,form){return api(path,{method:'POST',body:JSON.stringify(form)})}
+export function initLang(){document.querySelectorAll('[data-lang]').forEach(el=>el.addEventListener('change',e=>localStorage.setItem('bo_lang',e.target.value)))}
+export function logout(){localStorage.removeItem('bo_token');localStorage.removeItem('bo_user');sessionStorage.removeItem('bo_token');sessionStorage.removeItem('bo_user');location.href='login.html'}
+export function guard(role='client'){const u=currentUser();if(!u||u.role!==role){location.href='login.html';return null}return u}
+const icons={home:'M4 11 12 3l8 8v9H4z',wallet:'M3 7h18v13H3z M16 12h5',tasks:'M6 3h12v18H6z M9 8h6 M9 12h6 M9 16h4',history:'M12 7v5l3 2 M12 3a9 9 0 1 0 9 9',account:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M4 21c.8-4 3.3-6 8-6s7.2 2 8 6'};
+const items=[['home','Home','index.html'],['wallet','Wallet','wallet.html'],['tasks','Tasks','tasks.html'],['history','History','history.html'],['account','Account','profile.html']];
+export function nav(active){return `<nav class="bottom-nav" aria-label="Primary navigation">${items.map(([id,label,url])=>`<a class="${active===id?'active':''}" href="${url}" aria-current="${active===id?'page':'false'}"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${icons[id]}"/></svg></span><span>${label}</span></a>`).join('')}</nav>`}
+export function apiBase(url){return (window.BO_CONFIG?.API_BASE||localStorage.getItem('bo_api')||'/api')+url}
