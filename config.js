@@ -1,0 +1,1 @@
+const configuredApi=String(window.BO_API_BASE||localStorage.getItem('bo_api')||'https://boxoffice-platform-production.up.railway.app').trim();window.BO_CONFIG=Object.freeze({API_BASE:configuredApi.replace(/\/+$/,'')});
